@@ -2,7 +2,7 @@
     width: 22rem;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 640px) {
     .side-width {
         width: 100%;
     }
@@ -34,4 +34,21 @@
     border-radius: 5px;
     width: 5px;
     background-color: rgb(2, 123, 227, 0.75);
+}
+
+.video-box {
+    height: 400px;
+    min-height: 300px;
+    min-width: 100%;
+}
+
+@media screen and (max-width: 600px) {
+    .video-box {
+        height: 150px;
+        min-height: 150px;
+        width: 100%;
+        left: 50%;
+        z-index: 1000;
+        transform: translateX(-50%);
+    }
 }

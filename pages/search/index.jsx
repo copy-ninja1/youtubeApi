@@ -48,8 +48,8 @@ function SearchPage({ mediaDetails }) {
           />
         </div>
         <div className="w-full md:flex">
-          <div className="min-w-0 flex-auto px-4 sm:px-6 xl:px-8 pt-10 pb-24 lg:pb-16">
-            <div className="plyr__video-embed shadow-xl rounded-md">
+          <div className="min-w-0 flex-auto  sm:px-6 xl:px-8 pt-10 pb-24 lg:pb-16">
+            <div className="video-box shadow-xl sm:rounded-md mb-6 fixed sm:relative">
               {/* video player */}
               {currentMedia.id ? (
                 <Plyr
@@ -64,7 +64,7 @@ function SearchPage({ mediaDetails }) {
                   }}
                 />
               ) : (
-                <div className="flex justify-center items-center h-full w-full text-8xl bg-gray-500 text-white">
+                <div className="flex justify-center items-center h-full w-full text-8xl bg-gray-500 text-white sm:rounded-md">
                   <div className="text-center">
                     <BsFillCollectionPlayFill className="mx-auto"></BsFillCollectionPlayFill>
                     <h1 className=" text-xl md:text-2xl">
@@ -74,7 +74,7 @@ function SearchPage({ mediaDetails }) {
                 </div>
               )}
             </div>
-            <div className="md:hidden">
+            <div className="md:hidden mt-60 ">
               <MediaListing
                 videos={foundVideos}
                 onhandleChange={handleVideoChange}

@@ -1,6 +1,6 @@
 import React from "react";
 import Head from "next/head";
-import Image from "next/image";
+import Link from "next/link";
 
 import artistGroup from "../global/artists";
 
@@ -46,9 +46,9 @@ export default function Home() {
         <h1 className="text-6xl font-bold">Free Music Videos</h1>
 
         <p className="my-3 text-2xl">
-          Get started by editing
+          Listening is everything, millions of songs to choose from <br />
           <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
-            pages/index.js
+            Get Started
           </code>
         </p>
         <div className="flex box border rounded-lg border-gray-100 w-96 mt-6 mb-12">
@@ -76,12 +76,17 @@ export default function Home() {
                   return (
                     <div key={art} className="m-1 mt-0 mb-3 text-center">
                       <div class="mx-auto w-16 h-16 p-1 border-2 border-light-blue-400 rounded-full  cursor-pointer hover:shadow-lg">
-                        <img
-                          src={art.imageSrc}
-                          alt={art.name}
-                          class="w-full h-full rounded-full bg-light-blue-100 "
-                          loading="lazy"
-                        />
+                        <Link href={`/search?q=${art.name}`}>
+                          <a>
+                            {" "}
+                            <img
+                              src={art.imageSrc}
+                              alt={art.name}
+                              class="w-full h-full rounded-full bg-light-blue-100 "
+                              loading="lazy"
+                            />
+                          </a>
+                        </Link>
                       </div>
                       <p class="text-gray-700"> {art.name}</p>
                     </div>
