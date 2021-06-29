@@ -1,5 +1,7 @@
 import React from "react";
 import Head from "next/head";
+import Image from "next/image";
+
 import artistGroup from "../global/artists";
 
 export default function Home() {
@@ -8,15 +10,15 @@ export default function Home() {
   function reStructureArray(arr) {
     var newArray = [[]];
     var init = 0;
+    var step = 6;
+    console.log(arr.length);
     for (var i = 0; i < arr.length; i++) {
       if (newArray[init]) {
-        if (newArray[init].length < 5 - init /*slideNumber*/) {
+        if (newArray[init].length <= step - init) {
           newArray[init].push(arr[i]);
-          console.log("ok");
+          console.log(i);
         } else {
-          i--;
-          // step--;
-          console.log({ init });
+          // i--;
           init++;
         }
       } else {
@@ -24,6 +26,7 @@ export default function Home() {
         i--;
       }
     }
+    //
     console.log({ newArray });
     setArtist(newArray);
   }
@@ -61,38 +64,33 @@ export default function Home() {
           </button>
         </div>
         {/*  */}
-        {/* let n = 5; // you can take input from prompt or change the value
-let string = "";
-for (let i = 0; i < n; i++) {
-  // printing star
-  for (let k = 0; k < n - i; k++) {
-    string += "*";
-  }
-  string += "\n";
-} */}
-        <div className="flex">
+
+        <div className="">
           {artist.map((group, index) => {
             return (
-              <div key={index}>
+              <div
+                className="flex justify-center align-items-center"
+                key={index}
+              >
                 {group.map((art, i) => {
-                  return <div>{art.name}</div>;
+                  return (
+                    <div key={art} className="m-1 mt-0 mb-3 text-center">
+                      <div class="mx-auto w-16 h-16 p-1 border-2 border-light-blue-400 rounded-full  cursor-pointer hover:shadow-lg">
+                        <img
+                          src={art.imageSrc}
+                          alt={art.name}
+                          class="w-full h-full rounded-full bg-light-blue-100 "
+                          loading="lazy"
+                        />
+                      </div>
+                      <p class="text-gray-700"> {art.name}</p>
+                    </div>
+                  );
                 })}
               </div>
             );
           })}
         </div>
-        {/*  */}
-        {/* <div className="flex flex-wrap items-center justify-around max-w-4xl mt-6 sm:w-full">
-          <a
-            href="https://nextjs.org/docs"
-            className="p-6 mt-6 text-left border w-96 rounded-xl hover:text-blue-600 focus:text-blue-600"
-          >
-            <h3 className="text-2xl font-bold">Documentation &rarr;</h3>
-            <p className="mt-4 text-xl">
-              Find in-depth information about Next.js features and API.
-            </p>
-          </a>
-        </div> */}
       </main>
 
       <footer className="flex items-center justify-center w-full h-24 border-t">
