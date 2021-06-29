@@ -1,12 +1,10 @@
 import React, { useState } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
-import HashLoader from "react-spinners/HashLoader";
 import { BsFillCollectionPlayFill } from "react-icons/bs";
-import "plyr/dist/plyr.css";
-import { ListItem } from "../../components";
+import { MediaListing, SearchBox } from "../../components";
 import Plyr from "plyr-react";
-
+import "plyr-react/dist/plyr.css";
 function SearchPage({ mediaDetails }) {
   const router = useRouter();
   const foundVideos = mediaDetails.videos;
@@ -21,7 +19,7 @@ function SearchPage({ mediaDetails }) {
   function handleSearchSubmit(event) {
     event.preventDefault();
     console.log("searchQuery! ", searchQuery);
-    router.push("/search?q=" + searchQuery);
+    router.replace("/search?q=" + searchQuery);
   }
 
   function handleSearchInput(event) {
@@ -76,7 +74,7 @@ function SearchPage({ mediaDetails }) {
                 </div>
               )}
             </div>
-            <div class="md:hidden">
+            <div className="md:hidden">
               <MediaListing
                 videos={foundVideos}
                 onhandleChange={handleVideoChange}
@@ -106,54 +104,10 @@ function SearchPage({ mediaDetails }) {
   );
 }
 
-function MediaListing({ videos, onhandleChange }) {
-  return (
-    <div
-      className="side-width bg-white shadow-xl md:fixed rounded-md border-2 
-    border-gray-100  md:h-5/6 style-2  md:overflow-auto"
-    >
-      {!videos ? (
-        <div className="flex justify-center items-center h-full w-full">
-          <HashLoader color="#4da4ff"></HashLoader>
-        </div>
-      ) : (
-        <div className=" divide-y divide-gray-100">
-          {videos.map((media, indx) => {
-            return (
-              <ListItem
-                key={indx}
-                onClick={() => onhandleChange(media)}
-                media={media}
-              ></ListItem>
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function SearchBox({ actionUrl, onChange, onSubmit }) {
-  // console.log({ actionUrl });
-  return (
-    <div className="box border border-gray-100  md:fixed side-width  md:mt-4  md:ml-4">
-      <form onSubmit={onSubmit}>
-        <input
-          type="text"
-          placeholder="Search"
-          onChange={onChange}
-          className="w-full h-full px-4 py-3 outline-none"
-        />
-      </form>
-    </div>
-  );
-}
-export async function getServerSideProps(context) {
+export async function getServerSideProps({ req, query }) {
   // Fetch data from external API
-  console.log("context : :", context.query);
-  const res = await fetch(
-    `http://localhost:3000/api/media?q=${context.query.q}`
-  );
+  // console.log("context : :", Object.keys(context));
+  const res = await fetch(`http://${req.headers.host}/api/media?q=${query.q}`);
   const videos = await res.json();
 
   // Pass data to the page via props
