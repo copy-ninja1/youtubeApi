@@ -1,30 +1,17 @@
 import React, { useState } from "react";
 import Head from "next/head";
-import { useRouter } from "next/router";
 import { BsFillCollectionPlayFill } from "react-icons/bs";
 import { MediaListing, SearchBox } from "../../components";
 import Plyr from "plyr-react";
 import "plyr-react/dist/plyr.css";
 function SearchPage({ mediaDetails }) {
-  const router = useRouter();
   const foundVideos = mediaDetails.videos;
 
   const [currentMedia, setCurrentMedia] = useState({});
-  const [searchQuery, setSearchQuery] = React.useState("");
 
   //   const player = new Plyr("#player");
   function handleVideoChange(media) {
     setCurrentMedia(media);
-  }
-  function handleSearchSubmit(event) {
-    event.preventDefault();
-    console.log("searchQuery! ", searchQuery);
-    router.replace("/search?q=" + searchQuery);
-  }
-
-  function handleSearchInput(event) {
-    let val = event.target.value;
-    setSearchQuery(val);
   }
 
   return (
@@ -41,11 +28,7 @@ function SearchPage({ mediaDetails }) {
       {/* {currentMedia.id.videoId} */}
       <div className="min-w-0 w-full flex-auto lg:static lg:max-h-full lg:overflow-visible ">
         <div className="md:hidden">
-          <SearchBox
-            actionUrl={`http://localhost:3000/search?q=${searchQuery}`}
-            onChange={handleSearchInput}
-            onSubmit={handleSearchSubmit}
-          />
+          <SearchBox />
         </div>
         <div className="w-full md:flex">
           <div className="min-w-0 flex-auto  sm:px-6 xl:px-8 pt-10 pb-24 lg:pb-16">
@@ -64,7 +47,7 @@ function SearchPage({ mediaDetails }) {
                   }}
                 />
               ) : (
-                <div className="flex justify-center items-center h-full w-full text-8xl bg-gray-500 text-white sm:rounded-md">
+                <div className="flex justify-center items-center h-full w-full text-8xl bg-teal-500 text-white sm:rounded-md">
                   <div className="text-center">
                     <BsFillCollectionPlayFill className="mx-auto"></BsFillCollectionPlayFill>
                     <h1 className=" text-xl md:text-2xl">
@@ -74,7 +57,7 @@ function SearchPage({ mediaDetails }) {
                 </div>
               )}
             </div>
-            <div className="md:hidden mt-60 ">
+            <div className="md:hidden mt-60 sm:mt-0">
               <MediaListing
                 videos={foundVideos}
                 onhandleChange={handleVideoChange}
@@ -85,11 +68,7 @@ function SearchPage({ mediaDetails }) {
             className="hidden xl:text-sm  flex-none w-96 md:block
           overflow-hidden h-screen relative"
           >
-            <SearchBox
-              actionUrl={`http://localhost:3000/search?q=${searchQuery}`}
-              onChange={handleSearchInput}
-              onSubmit={handleSearchSubmit}
-            />
+            <SearchBox />
 
             <div className="md:flex justify-center items-center h-full">
               <MediaListing

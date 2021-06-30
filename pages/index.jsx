@@ -3,6 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 
 import artistGroup from "../global/artists";
+import { SearchBox } from "../components";
 
 export default function Home() {
   const [artist, setArtist] = React.useState([]);
@@ -42,7 +43,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-20 text-center">
+      <main className="flex flex-col items-center justify-center w-full flex-1 px-4 md:px-20 text-center">
         <h1 className="text-6xl font-bold">Free Music Videos</h1>
 
         <p className="my-3 text-2xl">
@@ -51,44 +52,36 @@ export default function Home() {
             Get Started
           </code>
         </p>
-        <div className="flex box border rounded-lg border-gray-100 w-96 mt-6 mb-12">
-          <form>
-            <input
-              type="text"
-              placeholder="Search"
-              className="w-full h-full px-4 py-3 outline-none rounded-lg"
-            />
-          </form>
-          <button className="bg-teal-500 w-32 m-2 rounded text-white">
-            Search
-          </button>
-        </div>
+        <SearchBox></SearchBox>
         {/*  */}
 
         <div className="">
           {artist.map((group, index) => {
             return (
               <div
-                className="flex justify-center align-items-center"
+                className="flex flex-wrap sm:flex-nowrap  justify-center align-items-center"
                 key={index}
               >
                 {group.map((art, i) => {
                   return (
                     <div key={art} className="m-1 mt-0 mb-3 text-center">
-                      <div class="mx-auto w-16 h-16 p-1 border-2 border-light-blue-400 rounded-full  cursor-pointer hover:shadow-lg">
+                      <div
+                        className="mx-auto w-16 h-16 p-1 border-2 border-light-blue-400 rounded-full
+                        cursor-pointer hover:shadow-lg"
+                      >
                         <Link href={`/search?q=${art.name}`}>
                           <a>
                             {" "}
                             <img
                               src={art.imageSrc}
                               alt={art.name}
-                              class="w-full h-full rounded-full bg-light-blue-100 "
+                              className="w-full h-full rounded-full bg-light-blue-100 "
                               loading="lazy"
                             />
                           </a>
                         </Link>
                       </div>
-                      <p class="text-gray-700"> {art.name}</p>
+                      <p className="text-gray-700"> {art.name}</p>
                     </div>
                   );
                 })}
