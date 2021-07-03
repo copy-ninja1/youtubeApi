@@ -3,7 +3,7 @@ import Head from "next/head";
 import Link from "next/link";
 
 import artistGroup from "../global/artists";
-import { SearchBox } from "../components";
+import { SearchBox, Header } from "../components";
 
 export default function Home() {
   const [artist, setArtist] = React.useState([]);
@@ -37,18 +37,19 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen py-2">
+    <div>
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <Header></Header>
+      {/* <div className="flex flex-col items-center justify-center min-h-screen py-2"></div> */}
+      <main className="flex flex-col items-center justify-center w-full min-h-screenflex-1 mt-20  py-2  px-4 md:px-20 text-center">
+        <h1 className=" text-4xl md:text-6xl font-bold">Free Music Videos</h1>
 
-      <main className="flex flex-col items-center justify-center w-full flex-1 px-4 md:px-20 text-center">
-        <h1 className="text-6xl font-bold">Free Music Videos</h1>
-
-        <p className="my-3 text-2xl">
+        <p className="my-3 text-xl md:text-2xl">
           Listening is everything, millions of songs to choose from <br />
-          <code className="p-3 font-mono text-lg bg-gray-100 rounded-md">
+          <code className="p-3 font-mono text-lg bg-teal-100 rounded-md">
             Get Started
           </code>
         </p>
@@ -69,17 +70,15 @@ export default function Home() {
                         className="mx-auto w-16 h-16 p-1 border-2 border-light-blue-400 rounded-full
                         cursor-pointer hover:shadow-lg"
                       >
-                        <Link href={`/search?q=${art.name}`}>
-                          <a>
-                            {" "}
-                            <img
-                              src={art.imageSrc}
-                              alt={art.name}
-                              className="w-full h-full rounded-full bg-light-blue-100 "
-                              loading="lazy"
-                            />
-                          </a>
-                        </Link>
+                        <a href={`/search?q=${art.name}`}>
+                          {" "}
+                          <img
+                            src={art.imageSrc}
+                            alt={art.name}
+                            className="w-full h-full rounded-full bg-light-blue-100 "
+                            loading="lazy"
+                          />
+                        </a>
                       </div>
                       <p className="text-gray-700"> {art.name}</p>
                     </div>
@@ -98,8 +97,7 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by{" "}
-          <img src="/vercel.svg" alt="Vercel Logo" className="h-4 ml-2" />
+          Powered by &nbsp;<h5>ROK</h5>
         </a>
       </footer>
     </div>
