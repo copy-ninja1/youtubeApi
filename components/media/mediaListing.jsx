@@ -23,6 +23,9 @@ function MediaListing({ videos, onhandleChange }) {
               ></ListItem>
             );
           })}
+          <h1 className="font-bold text-xl pt-6 text-center text-teal-600 appName">
+            ROK videos
+          </h1>
         </div>
       )}
     </div>

@@ -24,7 +24,7 @@ function SearchBox() {
   }, []);
   // console.log({ actionUrl });
   return (
-    <div className="flex box border rounded-lg border-gray-200 md:w-96 mt-6 mb-12 md:m-0 sm-m-0">
+    <div className="flex box  rounded-lg border border-gray-200 md:w-96 mt-6 mb-12 md:m-0 sm-m-0 focus-within:border-teal-500">
       <form onSubmit={handleSearchSubmit}>
         <input
           type="text"

@@ -15,12 +15,14 @@ function SearchPage({ mediaDetails }) {
   const { width } = useWindowDimensions();
 
   const [currentMedia, setCurrentMedia] = useState({});
-
+  const [_width, setWidth] = React.useState();
   //   const player = new Plyr("#player");
   function handleVideoChange(media) {
     setCurrentMedia(media);
   }
-
+  React.useEffect(() => {
+    setWidth(width);
+  }, [width]);
   return (
     <div>
       <Head>
@@ -42,45 +44,44 @@ function SearchPage({ mediaDetails }) {
             <SearchBox />
           </div> */}
           <div className="w-full md:flex">
-            <div className="min-w-0 flex-auto  sm:px-6 xl:px-8 pt-10 pb-24 lg:pb-16">
-              {width > 360 || currentMedia.id ? (
-                <div className="video-box shadow-xl sm:rounded-md mb-6 fixed top-11 sm:relative ">
-                  {/* video player */}
-                  {currentMedia.id ? (
-                    <React.Fragment>
-                      <div className="text-lg p-2 bg-white border-t border-gray-200">
-                        {currentMedia.snippet.title}
-                      </div>
-                      <Plyr
-                        source={{
-                          type: "video",
-                          sources: [
-                            {
-                              src: currentMedia.id.videoId,
-                              provider: "youtube",
-                            },
-                          ],
-                        }}
-                      />
-                    </React.Fragment>
-                  ) : (
-                    <div className="hidden md:flex justify-center items-center h-full w-full text-8xl bg-teal-500 text-white sm:rounded-md">
-                      <div className="text-center">
-                        <BsFillCollectionPlayFill className="mx-auto"></BsFillCollectionPlayFill>
-                        <h1 className=" text-xl md:text-2xl">
-                          Play any song from the list
-                        </h1>
-                      </div>
+            <div className="min-w-0 flex-auto  sm:px-6 xl:px-8 pt-10 pb-10 md:pb-24 lg:pb-16">
+              <div
+                className={`video-box shadow-xl sm:rounded-md mb-6 fixed top-11 sm:relative ${
+                  currentMedia.id || _width > 900 ? "block" : "hidden"
+                }`}
+              >
+                {/* video player */}
+                {currentMedia.id ? (
+                  <React.Fragment>
+                    <div className="text-lg p-2 bg-white border-t border-gray-200 md:border-0">
+                      {currentMedia.snippet.title}
                     </div>
-                  )}
-                </div>
-              ) : (
-                <></>
-              )}
-
+                    <Plyr
+                      source={{
+                        type: "video",
+                        sources: [
+                          {
+                            src: currentMedia.id.videoId,
+                            provider: "youtube",
+                          },
+                        ],
+                      }}
+                    />
+                  </React.Fragment>
+                ) : (
+                  <div className="hidden md:flex justify-center items-center h-full w-full text-8xl bg-teal-500 text-white sm:rounded-md">
+                    <div className="text-center">
+                      <BsFillCollectionPlayFill className="mx-auto"></BsFillCollectionPlayFill>
+                      <h1 className=" text-xl md:text-2xl">
+                        Play any song from the list
+                      </h1>
+                    </div>
+                  </div>
+                )}
+              </div>
               <div
                 className={`md:hidden sm:mt-0 ${
-                  width < 361 && currentMedia.id ? "mt-60" : ""
+                  currentMedia.id && width < 640 ? "mt-60" : ""
                 }`}
               >
                 <MediaListing
