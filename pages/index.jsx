@@ -1,8 +1,7 @@
 import React from "react";
-import Head from "next/head";
-
 import artistGroup from "../global/artists";
-import { SearchBox, Header } from "../components";
+import Layout from "../layout";
+import { SearchBox } from "../components";
 
 export default function Home() {
   const [artist, setArtist] = React.useState([]);
@@ -33,12 +32,11 @@ export default function Home() {
   }, []);
 
   return (
-    <div>
-      <Head>
-        <title>ROK- Home</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <Header></Header>
+    <Layout
+      pageTitle="ROK - Home Free Music Videos"
+      description="Rok Download Free MP3 Rock and soul, Pop, Latin, Jazz, Hip hop, Folk, Electronic, Country, Blues, Asian, African and a lot of Remixes.And in order to download music"
+    >
+      {/* <Header></Header> */}
       {/* <div className="flex flex-col items-center justify-center min-h-screen py-2"></div> */}
       <main className="flex flex-col items-center justify-center w-full min-h-screen flex-1 mt-20  py-2  px-4 md:px-20 text-center">
         <h1 className=" text-4xl md:text-6xl font-bold">Free Music Videos</h1>
@@ -94,6 +92,6 @@ export default function Home() {
           Powered by &nbsp;<h5 className="appName font-semibold">ROK</h5>
         </a>
       </footer>
-    </div>
+    </Layout>
   );
 }

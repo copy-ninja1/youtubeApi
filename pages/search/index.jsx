@@ -1,37 +1,33 @@
 import React, { useState } from "react";
-import Head from "next/head";
+import Layout from "../../layout";
+
 import { BsFillCollectionPlayFill } from "react-icons/bs";
-import {
-  MediaListing,
-  SearchBox,
-  Header,
-  useWindowDimensions,
-} from "../../components";
+import { MediaListing, useWindowDimensions } from "../../components";
 import Plyr from "plyr-react";
 import "plyr-react/dist/plyr.css";
 
-function SearchPage({ mediaDetails }) {
+function SearchPage({ mediaDetails, query }) {
   const foundVideos = mediaDetails.videos;
   const { width } = useWindowDimensions();
 
   const [currentMedia, setCurrentMedia] = useState({});
   const [_width, setWidth] = React.useState();
-  //   const player = new Plyr("#player");
   function handleVideoChange(media) {
     setCurrentMedia(media);
   }
   React.useEffect(() => {
+    console.log({ f: foundVideos[0] });
     setWidth(width);
   }, [width]);
   return (
-    <div>
-      <Head>
-        <title>Search</title>
-        <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-      </Head>
-      <Header>
-        <SearchBox />
-      </Header>
+    <Layout
+      pageTitle={`ROK - Search ${query} Free Music Videos`}
+      keywords={query}
+      socialImage={
+        foundVideos[0] ? foundVideos[0].snippet.thumbnails.high.url : ""
+      }
+      description="Rok Download Free MP3 Rock and other soul, Pop, Latin, Jazz, Hip hop, Folk, Electronic, Country, Blues, Asian, African and a lot of Remixes.And in order to download music"
+    >
       <div className="lg:flex mt-20">
         <div
           className="fixed z-40 inset-0 flex-none h-full 
@@ -104,7 +100,7 @@ function SearchPage({ mediaDetails }) {
           </div>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 }
 
@@ -115,7 +111,7 @@ export async function getServerSideProps({ req, query }) {
   const videos = await res.json();
 
   // Pass data to the page via props
-  return { props: { mediaDetails: { ...videos } } };
+  return { props: { mediaDetails: { ...videos }, query: query.q } };
 }
 
 export default SearchPage;

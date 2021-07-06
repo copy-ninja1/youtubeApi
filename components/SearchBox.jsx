@@ -20,6 +20,9 @@ function SearchBox() {
   React.useEffect(() => {
     if (router.query.q) {
       setSearchQuery(router.query.q);
+      // if (updateMeta) {
+      //   updateMeta(router.query.q);
+      // }
     }
   }, []);
   // console.log({ actionUrl });
