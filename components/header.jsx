@@ -47,7 +47,9 @@ function Header({ pageTitle, keywords, description, socialImage }) {
         <meta property="og:description" content={description} key="ogdesc" />
         <meta
           property="og:image"
-          content={`${socialImage ? socialImage : "/rok.png"}`}
+          content={`${
+            socialImage ? socialImage : "https://www.rokmovies.net/rok.png"
+          }`}
         />
         {/* <!-- Twitter --> */}
         <meta property="twitter:card" content="summary_large_image" />
@@ -56,7 +58,9 @@ function Header({ pageTitle, keywords, description, socialImage }) {
         <meta property="twitter:description" content={description} />
         <meta
           property="twitter:image"
-          content={`${socialImage ? socialImage : "/rok.png"}`}
+          content={`${
+            socialImage ? socialImage : "https://www.rokmovies.net/rok.png"
+          }`}
         />
         {/*  */}
         <meta name="theme-color" content="#439588" />
