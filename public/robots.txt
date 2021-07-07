@@ -1,0 +1,6 @@
+User-agent: *
+Allow: /*
+Disallow: /api/*
+Crawl-delay: 30
+Sitemap: https://www.rokmovies.net/sitemap.xml
+Host: https://www.rokmovies.net/

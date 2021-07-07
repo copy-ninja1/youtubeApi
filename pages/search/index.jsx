@@ -16,12 +16,11 @@ function SearchPage({ mediaDetails, query }) {
     setCurrentMedia(media);
   }
   React.useEffect(() => {
-    console.log({ f: foundVideos[0] });
     setWidth(width);
   }, [width]);
   return (
     <Layout
-      pageTitle={`ROK - Search ${query} Free Music Videos`}
+      pageTitle={`ROK - ${query} Free Music Videos`}
       keywords={query}
       socialImage={
         foundVideos[0] ? foundVideos[0].snippet.thumbnails.high.url : ""

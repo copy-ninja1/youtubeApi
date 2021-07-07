@@ -89,7 +89,8 @@ export default function Home() {
           target="_blank"
           rel="noopener noreferrer"
         >
-          Powered by &nbsp;<h5 className="appName font-semibold">ROK</h5>
+          Powered by &nbsp;
+          <h5 className="appName font-semibold text-teal-600">ROK</h5>
         </a>
       </footer>
     </Layout>
