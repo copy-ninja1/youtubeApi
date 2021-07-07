@@ -23,7 +23,9 @@ function SearchPage({ mediaDetails, query }) {
       pageTitle={`ROK - ${query} Free Music Videos`}
       keywords={query}
       socialImage={
-        foundVideos[0] ? foundVideos[0].snippet.thumbnails.high.url : ""
+        foundVideos && foundVideos[0]
+          ? foundVideos[0].snippet.thumbnails.high.url
+          : ""
       }
       description="Rok Download Free MP3 Rock and other soul, Pop, Latin, Jazz, Hip hop, Folk, Electronic, Country, Blues, Asian, African and a lot of Remixes.And in order to download music"
     >
@@ -106,11 +108,25 @@ function SearchPage({ mediaDetails, query }) {
 export async function getServerSideProps({ req, query }) {
   // Fetch data from external API
   // console.log("context : :", Object.keys(context));
-  const res = await fetch(`http://${req.headers.host}/api/media?q=${query.q}`);
-  const videos = await res.json();
+  let videos = await fetch(`http://${req.headers.host}/api/media?q=${query.q}`)
+    .then((res) => {
+      if (!res.ok) {
+        throw res.statusText;
+      }
+      return res.json(); //we only get here if there is no error
+    })
+    .then(function (data) {
+      console.log({ data });
+      return data;
+    })
+    .catch((err) => {
+      console.log({ err });
+    });
 
   // Pass data to the page via props
-  return { props: { mediaDetails: { ...videos }, query: query.q } };
+  return {
+    props: { mediaDetails: { ...videos }, query: query.q ? query.q : "" },
+  };
 }
 
 export default SearchPage;
