@@ -7,15 +7,18 @@ export default function Home() {
   const [artist, setArtist] = React.useState([]);
 
   function reStructureArray(arr) {
+    console.log(arr.length);
     var newArray = [[]];
     var init = 0;
     var step = 6;
     for (var i = 0; i < arr.length; i++) {
       if (newArray[init]) {
         if (newArray[init].length <= step - init) {
+          console.log({ [i]: arr[i] });
           newArray[init].push(arr[i]);
         } else {
           // i--;
+          newArray[init++].push(arr[i]);
           init++;
         }
       } else {
@@ -59,7 +62,7 @@ export default function Home() {
                   return (
                     <div key={art.name} className="m-1 mt-0 mb-3 text-center">
                       <div
-                        className="mx-auto w-16 h-16 p-1 border-2 border-light-blue-400 rounded-full
+                        className="mx-2 w-20 h-20 p-1 border-2 border-light-blue-400 rounded-full
                         cursor-pointer hover:shadow-lg"
                       >
                         <a href={`/search?q=${art.name}`}>
