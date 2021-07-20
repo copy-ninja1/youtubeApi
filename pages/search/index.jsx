@@ -156,7 +156,7 @@ export async function getServerSideProps({ req, query }) {
 
   function getData(cheerio) {
     var _videos = [];
-
+    console.log("getData");
     return new Promise(async (resolve, reject) => {
       // console.log('ok')
 
@@ -164,7 +164,7 @@ export async function getServerSideProps({ req, query }) {
         var $ele = cheerio(element);
         var id = $ele.find("a").attr("href").split("/")[1];
         var img = $ele.find("img");
-        // console.log({ element: img.attr('alt') })
+        console.log({ element: img.attr("alt") });
 
         _videos.push({
           id: i + 1,
