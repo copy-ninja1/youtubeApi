@@ -173,7 +173,11 @@ export async function getServerSideProps({ req, query }) {
           imageSrc: img.attr("src"),
         });
       });
-      resolve({ data: _videos });
+      if (_videos.length > 0) {
+        resolve({ data: _videos });
+      } else {
+        reject("no videos");
+      }
     });
   }
   // Pass data to the page via props
