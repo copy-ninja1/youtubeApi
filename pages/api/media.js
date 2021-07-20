@@ -65,11 +65,11 @@ export default async function handler(req, res) {
 
 
 function getData(cheerio) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         // console.log('ok')
         var _videos = []
 
-        cheerio('div.card.card-cascade').each(function (i, element) {
+        await cheerio('div.card.card-cascade').each(function (i, element) {
             var $ele = cheerio(element)
             var id = $ele.find('a').attr('href').split('/')[1]
             var img = $ele.find('img')
