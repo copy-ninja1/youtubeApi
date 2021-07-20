@@ -154,32 +154,27 @@ export async function getServerSideProps({ req, query }) {
 
   console.log({ data });
 
-  function getData(cheerio) {
+  async function getData(cheerio) {
     var _videos = [];
     console.log("getData");
-    return new Promise(async (resolve, reject) => {
-      // console.log('ok')
+    // console.log('ok')
 
-      await cheerio("div.card.card-cascade").each(function (i, element) {
-        var $ele = cheerio(element);
-        var id = $ele.find("a").attr("href").split("/")[1];
-        var img = $ele.find("img");
-        console.log({ element: img.attr("alt") });
+    await cheerio("div.card.card-cascade").each(function (i, element) {
+      var $ele = cheerio(element);
+      var id = $ele.find("a").attr("href").split("/")[1];
+      var img = $ele.find("img");
+      // console.log({ element: img.attr("alt") });
 
-        _videos.push({
-          id: i + 1,
-          uid: id,
-          title: img.attr("alt"),
-          imageSrc: img.attr("src"),
-        });
+      _videos.push({
+        id: i + 1,
+        uid: id,
+        title: img.attr("alt"),
+        imageSrc: img.attr("src"),
       });
-      if (_videos.length > 0) {
-        resolve({ data: _videos });
-      } else {
-        reject("no videos");
-      }
     });
+    return { data: _videos };
   }
+
   // Pass data to the page via props
   return {
     props: { mediaDetails: { videos: data }, query: query.q ? query.q : "" },
