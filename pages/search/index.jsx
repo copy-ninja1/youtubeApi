@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Layout from "../../layout";
+import cheerio from "cheerio";
 
 import { BsFillCollectionPlayFill } from "react-icons/bs";
 import { MediaListing, useWindowDimensions } from "../../components";
@@ -104,12 +105,40 @@ function SearchPage({ mediaDetails, query }) {
 export async function getServerSideProps({ req, query }) {
   // Fetch data from external API
   // console.log("context : :", Object.keys(context));
-  let videos = await fetch(`http://${req.headers.host}/api/media?q=${query.q}`)
+  // let videos = await fetch(`http://${req.headers.host}/api/media?q=${query.q}`)
+  //   .then((res) => {
+  //     if (!res.ok) {
+  //       throw res.statusText;
+  //     }
+  //     return res.json(); //we only get here if there is no error
+  //   })
+  //   .then(function (data) {
+  //     // console.log({ data });
+  //     return data;
+  //   })
+  //   .catch((err) => {
+  //     console.log({ err });
+  //   });
+
+  // const html = await fethHtml(
+  //   `https://mail.naijagreen.com.ng/s/${
+  //     query.q != "undefined"
+  //       ? query.q
+  //       : "Wizkid, Davido, Mr.Eazi, Burna Boy ,2baba,Naira Marley,Sinach,Flavor"
+  //   }/`
+  // );
+  let html = await fetch(
+    `https://mail.naijagreen.com.ng/s/${
+      query.q != "undefined"
+        ? query.q
+        : "Wizkid, Davido, Mr.Eazi, Burna Boy ,2baba,Naira Marley,Sinach,Flavor"
+    }/`
+  )
     .then((res) => {
       if (!res.ok) {
         throw res.statusText;
       }
-      return res.json(); //we only get here if there is no error
+      return res.text(); //we only get here if there is no error
     })
     .then(function (data) {
       // console.log({ data });
@@ -119,9 +148,23 @@ export async function getServerSideProps({ req, query }) {
       console.log({ err });
     });
 
+  const $ = cheerio.load(html);
+  var _videos = [];
+  $("div.card.card-cascade").each(function (i, element) {
+    var $ele = $(element);
+    var id = $ele.find("a").attr("href").split("/")[1];
+    var img = $ele.find("img");
+    _videos.push({
+      id: i + 1,
+      uid: id,
+      title: img.attr("alt"),
+      imageSrc: img.attr("src"),
+    });
+  });
+  console.log({ _videos });
   // Pass data to the page via props
   return {
-    props: { mediaDetails: { ...videos }, query: query.q ? query.q : "" },
+    props: { mediaDetails: { videos: _videos }, query: query.q ? query.q : "" },
   };
 }
 
