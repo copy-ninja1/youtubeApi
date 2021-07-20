@@ -22,11 +22,7 @@ function SearchPage({ mediaDetails, query }) {
     <Layout
       pageTitle={`ROK - ${query} Free Music Videos`}
       keywords={query}
-      socialImage={
-        foundVideos && foundVideos[0]
-          ? foundVideos[0].snippet.thumbnails.high.url
-          : ""
-      }
+      socialImage={foundVideos && foundVideos[0] ? foundVideos[0].imageSrc : ""}
       description="Rok Download Free MP3 Rock and other soul, Pop, Latin, Jazz, Hip hop, Folk, Electronic, Country, Blues, Asian, African and a lot of Remixes.And in order to download music"
     >
       <div className="lg:flex mt-20">
@@ -35,7 +31,7 @@ function SearchPage({ mediaDetails, query }) {
        bg-opacity-25 w-full lg:bg-white lg:static lg:h-auto 
        lg:overflow-y-visible lg:pt-0 lg:w-20 xl:w-24 lg:block hidden"
         ></div>
-        {/* {currentMedia.id.videoId} */}
+        {/* {currentMedia.uid.videoId} */}
         <div className="min-w-0 w-full flex-auto lg:static lg:max-h-full lg:overflow-visible ">
           {/* <div className="md:hidden">
             <SearchBox />
@@ -44,21 +40,21 @@ function SearchPage({ mediaDetails, query }) {
             <div className="min-w-0 flex-auto  sm:px-6 xl:px-8 pt-10 pb-10 md:pb-24 lg:pb-16">
               <div
                 className={`video-box shadow-xl sm:rounded-md mb-6 fixed top-11 sm:relative ${
-                  currentMedia.id || _width > 900 ? "block" : "hidden"
+                  currentMedia.uid || _width > 900 ? "block" : "hidden"
                 }`}
               >
                 {/* video player */}
-                {currentMedia.id ? (
+                {currentMedia.uid ? (
                   <React.Fragment>
                     <div className="text-lg p-2 bg-white border-t border-gray-200 md:border-0">
-                      {currentMedia.snippet.title}
+                      {currentMedia.title}
                     </div>
                     <Plyr
                       source={{
                         type: "video",
                         sources: [
                           {
-                            src: currentMedia.id.videoId,
+                            src: currentMedia.uid,
                             provider: "youtube",
                           },
                         ],
@@ -78,7 +74,7 @@ function SearchPage({ mediaDetails, query }) {
               </div>
               <div
                 className={`md:hidden sm:mt-0 ${
-                  currentMedia.id && width < 640 ? "mt-60" : ""
+                  currentMedia.uid && width < 640 ? "mt-60" : ""
                 }`}
               >
                 <MediaListing
