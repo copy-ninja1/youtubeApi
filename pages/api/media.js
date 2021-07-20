@@ -9,7 +9,9 @@ export default async function handler(req, res) {
     // console.log({ r: req.query.q })
     let data = await fetch(`https://mail.naijagreen.com.ng/s/${req.query.q != 'undefined' ? req.query.q : 'Wizkid, Davido, Mr.Eazi, Burna Boy ,2baba,Naira Marley,Sinach,Flavor'}`)
         .then(response => response.text())
-        .then(data => data);
+        .then(data => data).catch((error) => {
+            return res.status(500).send(error.message || error);
+        })
 
     const $ = cheerio.load(data);
     var _videos = []
