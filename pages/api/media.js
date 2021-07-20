@@ -49,23 +49,10 @@ export default async function handler(req, res) {
         const response = await fetch(`https://mail.naijagreen.com.ng/s/${req.query.q != 'undefined' ? req.query.q : 'Wizkid, Davido, Mr.Eazi, Burna Boy ,2baba,Naira Marley,Sinach,Flavor'}`)
         const htmlString = await response.text()
         const $ = cheerio.load(htmlString)
-        var _videos = []
-
-        $('div.card.card-cascade').each(function (i, element) {
-            var $ele = $(element)
-            var id = $ele.find('a').attr('href').split('/')[1]
-            var img = $ele.find('img')
-            console.log({ element: img.attr('alt') })
-
-            _videos.push({
-                id: i + 1,
-                uid: id,
-                title: img.attr('alt'),
-                imageSrc: img.attr('src')
-            })
-        });
+        const { data } = await getData($)
+        console.log({ data })
         res.statusCode = 200
-        return res.json({ videos: _videos })
+        return res.json({ videos: data })
     } catch (e) { // 5
         res.statusCode = 500
         return res.json({
@@ -76,13 +63,36 @@ export default async function handler(req, res) {
 
 }
 
-const fethHtml = async url => {
-    try {
-        const { data } = await axios.get(url);
-        return data;
-    } catch {
-        console.error(
-            `ERROR: An error occurred while trying to fetch the URL: ${url}`
-        );
-    }
-};
+
+function getData(cheerio) {
+    return new Promise((resolve, reject) => {
+        // console.log('ok')
+        var _videos = []
+
+        cheerio('div.card.card-cascade').each(function (i, element) {
+            var $ele = cheerio(element)
+            var id = $ele.find('a').attr('href').split('/')[1]
+            var img = $ele.find('img')
+            // console.log({ element: img.attr('alt') })
+
+            _videos.push({
+                id: i + 1,
+                uid: id,
+                title: img.attr('alt'),
+                imageSrc: img.attr('src')
+            })
+        });
+        resolve({ data: _videos })
+    })
+}
+
+// const fethHtml = async url => {
+//     try {
+//         const { data } = await axios.get(url);
+//         return data;
+//     } catch {
+//         console.error(
+//             `ERROR: An error occurred while trying to fetch the URL: ${url}`
+//         );
+//     }
+// };
