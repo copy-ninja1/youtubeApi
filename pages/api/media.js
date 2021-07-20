@@ -14,6 +14,7 @@ export default async function handler(req, res) {
         })
 
     const $ = cheerio.load(data);
+    console.log({ $ })
     var _videos = []
     $('div.card.card-cascade').each(function (i, element) {
         var $ele = $(element)
