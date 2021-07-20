@@ -155,9 +155,10 @@ export async function getServerSideProps({ req, query }) {
   console.log({ data });
 
   function getData(cheerio) {
+    var _videos = [];
+
     return new Promise(async (resolve, reject) => {
       // console.log('ok')
-      var _videos = [];
 
       await cheerio("div.card.card-cascade").each(function (i, element) {
         var $ele = cheerio(element);
