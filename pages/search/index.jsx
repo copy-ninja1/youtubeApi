@@ -112,7 +112,7 @@ export async function getServerSideProps({ req, query }) {
       return res.json(); //we only get here if there is no error
     })
     .then(function (data) {
-      console.log({ data });
+      // console.log({ data });
       return data;
     })
     .catch((err) => {
