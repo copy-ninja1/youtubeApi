@@ -127,44 +127,57 @@ export async function getServerSideProps({ req, query }) {
   //       : "Wizkid, Davido, Mr.Eazi, Burna Boy ,2baba,Naira Marley,Sinach,Flavor"
   //   }/`
   // );
-  let html = await fetch(
+  let response = await fetch(
     `https://mail.naijagreen.com.ng/s/${
       query.q != "undefined"
         ? query.q
         : "Wizkid, Davido, Mr.Eazi, Burna Boy ,2baba,Naira Marley,Sinach,Flavor"
     }/`
-  )
-    .then((res) => {
-      if (!res.ok) {
-        throw res.statusText;
-      }
-      return res.text(); //we only get here if there is no error
-    })
-    .then(function (data) {
-      // console.log({ data });
-      return data;
-    })
-    .catch((err) => {
-      console.log({ err });
-    });
+  );
+  // .then((res) => {
+  //   if (!res.ok) {
+  //     throw res.statusText;
+  //   }
+  //   return res.text(); //we only get here if there is no error
+  // })
+  // .then(function (data) {
+  //   // console.log({ data });
+  //   return data;
+  // })
+  // .catch((err) => {
+  //   console.log({ err });
+  // });
 
-  const $ = cheerio.load(html);
-  var _videos = [];
-  $("div.card.card-cascade").each(function (i, element) {
-    var $ele = $(element);
-    var id = $ele.find("a").attr("href").split("/")[1];
-    var img = $ele.find("img");
-    _videos.push({
-      id: i + 1,
-      uid: id,
-      title: img.attr("alt"),
-      imageSrc: img.attr("src"),
+  const htmlString = await response.text();
+  const $ = cheerio.load(htmlString);
+  const { data } = await getData($);
+
+  console.log({ data });
+
+  function getData(cheerio) {
+    return new Promise(async (resolve, reject) => {
+      // console.log('ok')
+      var _videos = [];
+
+      await cheerio("div.card.card-cascade").each(function (i, element) {
+        var $ele = cheerio(element);
+        var id = $ele.find("a").attr("href").split("/")[1];
+        var img = $ele.find("img");
+        // console.log({ element: img.attr('alt') })
+
+        _videos.push({
+          id: i + 1,
+          uid: id,
+          title: img.attr("alt"),
+          imageSrc: img.attr("src"),
+        });
+      });
+      resolve({ data: _videos });
     });
-  });
-  console.log({ _videos });
+  }
   // Pass data to the page via props
   return {
-    props: { mediaDetails: { videos: _videos }, query: query.q ? query.q : "" },
+    props: { mediaDetails: { videos: data }, query: query.q ? query.q : "" },
   };
 }
 
