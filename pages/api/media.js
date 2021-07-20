@@ -1,6 +1,4 @@
 const cheerio = require('cheerio')
-const axios = require('axios')
-
 export default async function handler(req, res) {
     //  // console.log({ query: req.query })
     //  // let _query = !req.query && !!req.query.q ? req.query.q : 'trending%20songs'
@@ -14,12 +12,14 @@ export default async function handler(req, res) {
         })
 
     const $ = cheerio.load(data);
-    console.log({ $ })
     var _videos = []
+
     $('div.card.card-cascade').each(function (i, element) {
         var $ele = $(element)
         var id = $ele.find('a').attr('href').split('/')[1]
         var img = $ele.find('img')
+        console.log({ element: img.attr('alt') })
+
         _videos.push({
             id: i + 1,
             uid: id,
