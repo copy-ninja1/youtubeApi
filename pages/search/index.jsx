@@ -149,19 +149,21 @@ export async function getServerSideProps({ req, query }) {
   // });
 
   const htmlString = await response.text();
-  const $ = cheerio.load(htmlString);
-  const { data } = await getData($);
+  console.log(htmlString);
+  const { data } = await getData(htmlString);
 
   console.log("first");
 
-  function getData(cheerio) {
+  function getData(htmlString) {
     console.log("getData");
+    const $ = cheerio.load(htmlString);
+
     return new Promise(async (resolve, reject) => {
       // console.log('ok')
       var _videos = [];
 
-      cheerio("div.card.card-cascade").each(function (i, element) {
-        var $ele = cheerio(element);
+      $("div.card.card-cascade").each(function (i, element) {
+        var $ele = $(element);
         var id = $ele.find("a").attr("href").split("/")[1];
         var img = $ele.find("img");
         // console.log({ element: img.attr("alt") });
