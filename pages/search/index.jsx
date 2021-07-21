@@ -152,29 +152,32 @@ export async function getServerSideProps({ req, query }) {
   const $ = cheerio.load(htmlString);
   const { data } = await getData($);
 
-  console.log({ data });
+  console.log("first");
 
-  async function getData(cheerio) {
-    var _videos = [];
+  function getData(cheerio) {
     console.log("getData");
-    // console.log('ok')
+    return new Promise(async (resolve, reject) => {
+      // console.log('ok')
+      var _videos = [];
 
-    await cheerio("div.card.card-cascade").each(function (i, element) {
-      var $ele = cheerio(element);
-      var id = $ele.find("a").attr("href").split("/")[1];
-      var img = $ele.find("img");
-      // console.log({ element: img.attr("alt") });
+      cheerio("div.card.card-cascade").each(function (i, element) {
+        var $ele = cheerio(element);
+        var id = $ele.find("a").attr("href").split("/")[1];
+        var img = $ele.find("img");
+        // console.log({ element: img.attr("alt") });
 
-      _videos.push({
-        id: i + 1,
-        uid: id,
-        title: img.attr("alt"),
-        imageSrc: img.attr("src"),
+        _videos.push({
+          id: i + 1,
+          uid: id,
+          title: img.attr("alt"),
+          imageSrc: img.attr("src"),
+        });
       });
-    });
-    return { data: _videos };
-  }
+      console.log("2");
 
+      resolve({ data: _videos });
+    });
+  }
   // Pass data to the page via props
   return {
     props: { mediaDetails: { videos: data }, query: query.q ? query.q : "" },
